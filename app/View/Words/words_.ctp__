@@ -1,0 +1,8 @@
+<div id="EduPost">
+	
+<h1><?= $word['Word']['en_words'] ?></h1>
+<p class="date"><?= $word['Word']['pl_words'] ?></p>
+<p class="author"><?= $word['Word']['category'] ?></p>
+<p class="main"><?= $word['Word']['id'] ?></p>
+
+</div>
