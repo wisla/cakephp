@@ -1,0 +1,16 @@
+/*
+ * General css file for demos - picssel.com
+*/
+* {margin: 0; padding: 0; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box}
+body {font-family: arial, sans-serif; font-size: 14px; line-height: 1.4em; color: #1a1a1a}
+.cf:after{visibility:hidden; display:block; content:""; clear:both; height:0}
+* html .cf{zoom:1}/* IE6 */
+*:first-child+html .cf{zoom:1}/* IE7 */
+h1, h2, h3, h4, h5, h6, p {padding-bottom: 15px;}
+p {font-size: 12px; line-height: 16px;}
+a {outline: 0 none; border: 0 none;}
+a img {border: 0 none;}
+#logo {  background: url("http://www.picssel.com/logo224x60.png") no-repeat scroll 0 10px rgba(0, 0, 0, 0);  height: 100px;  margin: 10px auto;  max-width: 972px;  position: relative;  width: 95%;}
+#wrap {  box-sizing: border-box;  margin: 20px auto;  max-width: 972px;  padding-bottom: 30px;  position: relative;  width: 95%;}
+.button {width:200px; display:block; text-align:center; padding:5px; color:#000; background:#ccc fixed; background:-webkit-gradient(linear,left top,left bottom,from(#fff),to(#ccc)); background:-moz-linear-gradient(top,#fff,#ccc);  background:-o-linear-gradient(top,#fff,#ccc);  border-top:solid 1px #bbb; border-right:solid 1px #aaa; border-left:solid 1px #999; border-bottom:solid 1px #888; text-shadow:#fff -1px 1px 1px;  -moz-box-shadow:0px 1px 3px #ccc;  -webkit-box-shadow:0px 1px 3px #ccc;  box-shadow:0px 1px 3px #ccc; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; cursor:pointer; text-decoration: none}
+.button:hover {background:-webkit-gradient(linear,left top,left bottom,from(#dedede),to(#fff)); background:-moz-linear-gradient(top,#dedede,#fff);  background:-o-linear-gradient(top,#dedede,#fff);  text-decoration: none}
