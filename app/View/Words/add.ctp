@@ -24,8 +24,8 @@ echo $this->Html->css('bootstrap');
 		<input class="form-control" name="data[Word][en_words]" type="text" placeholder="Enter the word"/>
 		</div>
     </div>
-	
-	
+
+
 	<div class="form-group form-group-lg">
         <div class="col-sm-4">
 		<select class="form-control" id="sel_lang_sec" name="data[Word][language_out]">
@@ -68,14 +68,14 @@ echo $this->Html->css('bootstrap');
 		<option value="Feelings">Feelings</option>
         </select>
 		</div>
-      
-    <select style="display: none;" name="data[Word][role]">  
+
+    <select style="display: none;" name="data[Word][role]">
     <option value="<?php print $this->Session->read('Auth.User.username'); ?>"></option>
     </select>
 	</div>
      <label class="col-sm-2 control-label">
-        <span>&nbsp;</span> 
+        <span>&nbsp;</span>
         <input type="submit" class="button" value="Save" name="btnSubmit"/> <?php
 echo $this->Form->end();
 ?>
-
+<! change test -->
