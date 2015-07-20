@@ -37,7 +37,7 @@ echo $this->Html->css('bootstrap');
 		<option value="french">French</option>
 		<option value="german">German</option>
 		<option value="french">French</option>
-		<option value="italian">Italian</option>
+		<option value="italian">Italia</option>
     </select>
 <script>
 (function(){
