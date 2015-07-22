@@ -4,8 +4,10 @@ echo $this->Html->css('bootstrap');
 ?>
 <form class="form-horizontal" id="AdminAddForm" method="post" action="">
 <h1>Add new WORDs
-        <span>Please insert word in the fields.</span>
+        <span>Please insert word in the fields</span>
     </h1>
+	<fieldset>
+		<legend>Word which you will be learning</legend>
 	<div class="form-group form-group-lg">
         <div class="col-sm-4">
 		<select class="form-control" id="sel_lang_first" name="data[Word][language_in]">
@@ -24,8 +26,10 @@ echo $this->Html->css('bootstrap');
 		<input class="form-control" name="data[Word][en_words]" type="text" placeholder="Enter the word"/>
 		</div>
     </div>
-
-
+	</fieldset>
+		<br>
+	<fieldset>
+		<legend>Word which you know</legend>
 	<div class="form-group form-group-lg">
         <div class="col-sm-4">
 		<select class="form-control" id="sel_lang_sec" name="data[Word][language_out]">
@@ -37,7 +41,7 @@ echo $this->Html->css('bootstrap');
 		<option value="french">French</option>
 		<option value="german">German</option>
 		<option value="french">French</option>
-		<option value="italian">Italia</option>
+		<option value="italian">Italian</option>
     </select>
 <script>
 (function(){
@@ -57,6 +61,10 @@ echo $this->Html->css('bootstrap');
 		<input class="form-control" name="data[Word][pl_words]" type="text" placeholder="Enter the word"/>
 		</div>
 	</div>
+		</fieldset>
+	<br>
+	<fieldset>
+		<legend>Choose category</legend>
 	<div class="form-group form-group-lg">
         <div class="col-sm-4"><h4>Category :</h4></div>
 		<div class="col-sm-4">
@@ -73,6 +81,7 @@ echo $this->Html->css('bootstrap');
     <option value="<?php print $this->Session->read('Auth.User.username'); ?>"></option>
     </select>
 	</div>
+		</fieldset>
      <label class="col-sm-2 control-label">
         <span>&nbsp;</span>
         <input type="submit" class="button" value="Save" name="btnSubmit"/> <?php

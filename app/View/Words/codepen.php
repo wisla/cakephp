@@ -1,5 +1,5 @@
 <?php echo $this->Html->image('word2.gif', array('class' => 'hide', 'id' => 'loader')); ?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <head>
 <?php
 echo $this->Html->charset();
@@ -124,7 +124,7 @@ li:hover {
 }
 
 </style>
-						
+
 
 
 </head>
@@ -132,52 +132,52 @@ li:hover {
 		<div>
 <div class="controls">
   <label>Filter:</label>
-  
+
   <button class="filter" data-filter="all">All</button>
   <? $categories = Hash::extract($words, '{n}.Word.category');
 			$uniqueCategories = array_unique($categories);
 			foreach ($uniqueCategories as $category) {
 				echo '<button class="filter" data-filter=".category-' .$category. '">' . $category . '</button>';
 			}?>
-  
+
   <label>Sort:</label>
-  
+
   <button class="sort" data-sort="myorder:asc">Asc</button>
   <button class="sort" data-sort="myorder:desc">Desc</button>
 </div>
 
-		
-		
+
+
 			<div class="services-grid container">
-  
+
   <ul>
 						<? foreach($words as $word): ?>
-						<li class="mix service <?php echo 'category-' . $word['Word']['category'] ?>" data-myorder="<?php echo $word['Word']['id'] ?>" data-detail="<? print $word['Word']['id'] ?>"> 
-				        
+						<li class="mix service <?php echo 'category-' . $word['Word']['category'] ?>" data-myorder="<?php echo $word['Word']['id'] ?>" data-detail="<? print $word['Word']['id'] ?>">
+
 							<figure>
 								<img src="img/thumb/1.png" alt="img01"/>
 								<figcaption><h3>
 								<?= $word['Word']['pl_words'] ?>
 								</h3><p><?= $word['Word']['category'] ?></p></figcaption>
 							</figure>
-                            
+
 						</li>
-					
+
 
 						<? endforeach; ?>
 					</ul>
-				
-				
-				
-				
-					
+
+
+
+
+
 						 <? foreach($words as $word): ?>
-                                                                           
+
 						<div class="services-detail" id="<? print $word['Word']['id'] ?>">
                         <div class="close">&#10060;</div>
                         <div class="next">&#59230;</div>
                         <div class="previous">&#59229;</div>
-   
+
                 <form data-word="<? print $word['Word']['en_words'] ?>">
                 <div>
                   <span class="validation"></span>
@@ -185,15 +185,15 @@ li:hover {
                   <input id="forma" type="submit" value="Check"/>
                 </div>
               </form>
-                                <h3 id="check"><?php echo $word['Word']['pl_words'] ?></h3>									
+                                <h3 id="check"><?php echo $word['Word']['pl_words'] ?></h3>
                                 <button onclick="reply_click(this)">Show</button>
-								<h4 id="hidden_en" class="hidden_en"><?php echo $word['Word']['en_words'] ?></h4>	
-       
+								<h4 id="hidden_en" class="hidden_en"><?php echo $word['Word']['en_words'] ?></h4>
+
                     </div>
                         <? endforeach; ?>
-		
+
 		</div>
-                        
+
                         <script>
                         $(document).ready(function() {
                           $('form').submit(function(event) {
@@ -206,7 +206,7 @@ li:hover {
 							  $(this).next().css({"background": "#1DB51D", "color": "white"});
 							  }
 
-							  else { 
+							  else {
 							  $(this).next().css({"background": "red", "color": "white"});
 							  }
                         }
@@ -214,10 +214,10 @@ li:hover {
                               .find('.validation')
                               .html(message)
                               .show();
-                        
+
                             event.preventDefault();
                           });
-						  
+
                         });
                         </script>
                         <script>
@@ -225,41 +225,41 @@ li:hover {
 
                             $( ".service" ).click(function() {
                               var id = $(this).data("detail");
-                              
+
                               $( "#"+id ).animate({
                                         height: "toggle",
                                         opacity: "toggle"
                                     }, "fast");
                             });
-                            
+
                             $( ".close" ).click(function() {
                               $(this).parent().animate({
                                         height: "toggle",
                                         opacity: "toggle"
                                     }, "fast");
                             });
-                            
+
                             $( ".next" ).click(function() {
-                              
+
                               $(this).parent().animate({
                                         opacity: "toggle"
                                     }, "fast");
                               var next = $(this).parent().next(".services-detail");
                               if (!next || next.length == 0) next = $(".services-detail:first");
-                              
+
                               $(next).animate({
                                 opacity: "toggle"
                               }, "fast");
                             });
-                            
+
                             $( ".previous" ).click(function() {
                               $(this).parent().animate({
                                         opacity: "toggle"
                                     }, "fast");
-                              
+
                               var prev = $(this).parent().prev(".services-detail");
                               if (!prev || prev.length == 0) prev = $(".services-detail:last");
-                              
+
                               $(prev).animate({
                                 opacity: "toggle"
                               }, "fast");
@@ -270,12 +270,12 @@ li:hover {
                         <script>
                         function reply_click(btn)
                         {
-                            $(btn).next("#hidden_en").toggle("slow");   
+                            $(btn).next("#hidden_en").toggle("slow");
                         }
                         </script>
-						
-		
-		
+
+
+
 	</body>
 
 </html>

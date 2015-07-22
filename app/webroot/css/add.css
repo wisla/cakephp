@@ -12,7 +12,7 @@ form {
 }
 h1 {
     font-size: 25px;
-    padding: 0px 0px 10px 40px;
+    padding: 0px 10px 40px;
     display: block;
     border-bottom:1px solid #E4E4E4;
     margin: -10px -15px 30px -10px;;
@@ -43,7 +43,7 @@ input[type="text"], input[type="email"], textarea, select {
     margin-top: 2px;
     outline: 0 none;
     padding: 3px 3px 3px 5px;
-    width: 70%;
+    width: 100%;
     font-size: 14px;
     line-height:15px;
     box-shadow: inset 0px 1px 4px #ECECEC;
@@ -91,4 +91,16 @@ textarea{
 
 form div {
 clear: none !important;
+}
+
+legend {
+	border: none !important;
+	width: inherit !important;
+	padding: 15px !important;
+}
+
+fieldset {
+	padding: 0.35em 0.625em 0.75em !important;
+	margin: 0 2px !important;
+	border: 1px solid #c0c0c0 !important;
 }
