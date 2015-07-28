@@ -55,6 +55,14 @@ class WordsController extends AppController
                 //$this->Session->setFlash('Unable to add your word.', 'flash_custom');
             }
         }
+         $this->Paginator->settings = array(
+                'conditions' => array('Word.role' => CakeSession::read("Auth.User.username")),
+                'limit' => 100
+            );
+         // similar to findAll(), but fetches paged results
+            $data = $this->Paginator->paginate('Word');
+            $this->set('words', $data);
+                //$this->set('words', $this->paginate('Word'));
 	}
 
 	public function remove($id = null)
