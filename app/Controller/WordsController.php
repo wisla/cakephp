@@ -4,8 +4,8 @@ class WordsController extends AppController
 {
 	public $helpers = array('Html', 'Form', 'Number', 'Text', 'Session', 'Js');
 	public $components = array('Session', 'Paginator', 'RequestHandler');
-    
-    
+
+
     public function index()
     {
     	 $this->Paginator->settings = array(
@@ -18,7 +18,7 @@ class WordsController extends AppController
     $this->set('words', $data);
         //$this->set('words', $this->paginate('Word'));
     }
-	
+
 	public function word($id = null)
     {
     	if(!isset($id))
@@ -35,7 +35,7 @@ class WordsController extends AppController
         	$this->set('word', $word);
 		}
     }
-	
+
 	public function add()
 	{
 		if ($this->request->is('post'))
@@ -50,13 +50,13 @@ class WordsController extends AppController
             {
             	// krótka wiadomość przesyłana do widoku
             	$this->Session->setFlash('Unable to add your word.');
-				
+
 				// Niestandardowy layout
                 //$this->Session->setFlash('Unable to add your word.', 'flash_custom');
             }
         }
 	}
-	
+
 	public function remove($id = null)
 	{
 		$word = $this->Word->findById($id);
@@ -65,11 +65,11 @@ class WordsController extends AppController
 			//http://book.cakephp.org/2.0/en/development/exceptions.html
         	throw new NotFoundException(__('Invalid post'));
     	}
-		
+
 		$this->Word->delete($id);
 		$this->redirect(array('controller' => 'words', 'action' => 'display'));
 	}
-	
+
 public function edit($id = null) {
     if (!$id) {
         throw new NotFoundException(__('Post is not valid!'));
@@ -107,15 +107,15 @@ public function display()
     $this->set('words', $data);
         //$this->set('words', $this->paginate('Word'));
     }
-	
+
 
     public $paginate = array(
         'order' => array(
             'Word.id' => 'asc'
         )
     );
-	
-	
-} 
+
+
+}
 
 ?>

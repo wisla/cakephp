@@ -61,21 +61,21 @@ class AppController extends Controller {
     // Default deny
     return false;
 }
-	
+
     public function beforeFilter() {
         $this->Auth->allow('index', 'view');
-        
+
          parent::beforeFilter();
 
     // remove leading and trailing whitespace from posted data
     if (!function_exists('trimItem')) {
         function trimItem(&$item,$key){
             if (is_string($item)){
-                $item = trim(strip_tags($item));    
+                $item = trim(strip_tags($item));
             }
         }
-    }       
-    array_walk_recursive($this->request->data, 'trimItem');                     
+    }
+    array_walk_recursive($this->request->data, 'trimItem');
 
     }
     //...

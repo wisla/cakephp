@@ -3,11 +3,11 @@
 echo $this->Html->charset();
 echo $this->Html->css(array('magnific-popup', 'mediaBoxes'));
 ?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 
-	
+
 	<head>
-				
+
 	<style>
 	.white-popup {
   position: relative;
@@ -39,27 +39,27 @@ echo $this->Html->css(array('magnific-popup', 'mediaBoxes'));
         <li><a href="#" data-sort-by="text">Sort by Text</a></li>
     </ul>
 </div>
- 
+
 <!-- The filter bar -->
 <ul class="media-boxes-filter" id="filter">
   <li><a class="selected" href="#" data-filter="*">All</a></li>
-  
+
   <? $categories = Hash::extract($words, '{n}.Word.category');
 			$uniqueCategories = array_unique($categories);
 			foreach ($uniqueCategories as $category) {
-				echo '<li><a href="#" data-filter=".' . $category . '">' . $category . '</a></li>';
+				echo '<li><a href="#" data-filter=".' . str_replace(' ', '', $category) . '">' . $category . '</a></li>';
 			}?>
-					
+<!-- ' . str_replace(' ', '', $category) . ' -->
 </ul>
 </div>
 
- 
+
 <!-- The grid with media boxes -->
 <div id="grid">
-    
-    <!-- --------- MEDIA BOX MARKUP --------- -->   
+
+    <!-- --------- MEDIA BOX MARKUP --------- -->
 		<? foreach($words as $word): ?>
-    <div class="media-box <?php echo $word['Word']['category'] ?>">
+    <div class="media-box <?php echo  str_replace(' ', '', $word['Word']['category']) ?>">
     <div class="media-box-image">
         <div data-thumbnail="img/thumb/1.png"></div>
 		<div data-type="inline" data-popup="#<?php echo $word['Word']['id'] ?>"></div>
@@ -81,17 +81,17 @@ echo $this->Html->css(array('magnific-popup', 'mediaBoxes'));
 <?php
 echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquery.imagesLoaded.min', 'jquery.transit.min', 'jquery.easing', 'waypoints.min', 'modernizr.custom.min', 'jquery.magnific-popup.min', 'jquery.mediaBoxes', 'bootstrap.min'));
 ?>
-	
-	<!-- --------- Info inside popout --------- --> 
+
+	<!-- --------- Info inside popout --------- -->
 	<? foreach($words as $word): ?>
  		<div id="<?php echo $word['Word']['id'] ?>" class="white-popup mfp-hide">
-		<h3 id="check"><?php echo $word['Word']['pl_words'] ?></h3>	
+		<h3 id="check"><?php echo $word['Word']['pl_words'] ?></h3>
 			<form data-word="<? print $word['Word']['en_words'] ?>">
-                
+
                   <span class="validation"></span>
                   <input autofocus id="cours" class="word" type="text"/>
                   <input id="forma" type="submit" value="Check"/>
-				
+
             </form>
         <button onclick="reply_click(this)">Show</button>
 		<h4 id="hidden_en" class="hidden_en"><?php echo $word['Word']['en_words'] ?></h4>
@@ -100,7 +100,7 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
 				$('#prev_next').focus(function(){
 				$(this).next('input').focus();
 				})
-				</script>	
+				</script>
 	<? endforeach; ?>
 </div>
 </div>
@@ -110,7 +110,7 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
 	</div>
 
 <script>
-    
+
     $('#grid').mediaBoxes({
         boxesToLoadStart: 5,
         boxesToLoad: 4,
@@ -146,22 +146,22 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
         getSortData: {
           title: '.media-box-title',
           text: '.media-box-text',
-        }, 
-        waitUntilThumbLoads: true, 
-        waitForAllThumbsNoMatterWhat: false, 
-        thumbnailOverlay: true, 
-        overlayEffect: 'fade', 
+        },
+        waitUntilThumbLoads: true,
+        waitForAllThumbsNoMatterWhat: false,
+        thumbnailOverlay: true,
+        overlayEffect: 'fade',
         overlaySpeed: 200,
         overlayEasing: 'default',
         showOnlyLoadedBoxesInPopup: false,
-        considerFilteringInPopup: true, 
+        considerFilteringInPopup: true,
         deepLinking: true,
         gallery: true,
         LoadingWord: 'Loading...',
         loadMoreWord: 'Load More',
         noMoreEntriesWord: 'No More Entries',
-    }); 
-    
+    });
+
 </script>
 
  <script>
@@ -170,13 +170,13 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
                             var $form = $(this),
                               value = $form.find('.word').val(),
                               word = $form.data('word'),
-                              valid = word === value.toLowerCase(),
+                              valid = word.toLowerCase() === value.toLowerCase(),
                               message = function(){
 							  if (valid == true){
 							  $(this).next().css({"background": "#1DB51D", "color": "white"});
 							  }
 
-							  else { 
+							  else {
 							  $(this).next().css({"background": "red", "color": "white"});
 							  }
                         }
@@ -185,17 +185,17 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
                               .html(message)
                               .show();
 
-                        
+
                             event.preventDefault();
                           });
-						  
+
                         });
                         </script>
-                        
+
                         <script>
                         function reply_click(btn)
                         {
-                            $(btn).next("#hidden_en").toggle("slow");   
+                            $(btn).next("#hidden_en").toggle("slow");
                         }
                         </script>
 

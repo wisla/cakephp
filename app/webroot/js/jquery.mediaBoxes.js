@@ -1,7 +1,7 @@
-    
-/* ======================================================= 
+
+/* =======================================================
  *
- *      Media Boxes     
+ *      Media Boxes
  *      Version: 2.6
  *      By David Blanco
  *
@@ -10,7 +10,7 @@
  *
  *      Copyright (c) 2013, David Blanco. All rights reserved.
  *      Available only in http://codecanyon.net/
- *      
+ *
  *      ---------------------------------
  *      CONTENTS
  *      ---------------------------------
@@ -27,7 +27,7 @@
  *      [10] MAGNIFIC POPUP
  *      [11] DEEP LINKING
  *      [12] SOCIAL IN MAGNIFIC POPUP
- *      
+ *
  * ======================================================= */
 
 
@@ -35,7 +35,7 @@
 (function( window, $, undefined ){
 
     var MediaBoxes = function(container, options){
-        
+
     /* ====================================================================== *
             [1] SETUP
      * ====================================================================== */
@@ -44,7 +44,7 @@
         var settings = $.extend({}, $.fn.mediaBoxes.defaults, options);
 
         /* VARS */
-        var $container                  = $(container).addClass('media-boxes-container');        
+        var $container                  = $(container).addClass('media-boxes-container');
         var itemSelector                = '.media-box';
         var boxImageSelector            = '.media-box-image';
         var itemClass                   = 'media-box'; /* same as itemSelector but without the '.' */
@@ -56,7 +56,7 @@
         if( settings.overlayEasing == 'default' ){
             settings.overlayEasing = (animation=='transition')?'_default':'swing'; /* 'default' is for CSS3 and 'swing' for jQuery animate */
         }
-        
+
         /* LOAD MORE BUTTON */
         var loadMoreButton              = $('<div class="media-boxes-load-more media-boxes-load-more-button"></div>').insertAfter($container);
 
@@ -65,7 +65,7 @@
 
         /* Save the settings in the container */
         $container.data('settings', settings);
-        
+
         /* Fix the margins for the container (for horizontal and vertical space)  */
         $container
             .css({
@@ -86,16 +86,16 @@
 
         /* Initialize isotope plugin */
         $container.isotopeMB({
-            itemSelector    : itemSelector,  
-            //transitionDuration: '0.3s',  
-            //filter: combineFilters(filters),     
+            itemSelector    : itemSelector,
+            //transitionDuration: '0.3s',
+            //filter: combineFilters(filters),
             masonry: {
                 columnWidth: '.media-boxes-grid-sizer'
             },
             getSortData: settings.getSortData,
-            sortBy: defSort, 
-            sortAscending: defAsc,     
-        }); 
+            sortBy: defSort,
+            sortAscending: defAsc,
+        });
 
         //updateFilterClasses(); /* this is used for the popup, so it does show the images depending on the filter */
 
@@ -111,7 +111,7 @@
                 var popupDiv        = boxImage.find('div[data-popup]').eq(0); /* only one popup allowed */
 
                 boxImage.attr('data-popupTrigger', 'yes');
-                
+
                 var type = 'mfp-image';
                 if(popupDiv.data('type') == 'iframe'){
                     type = 'mfp-iframe';
@@ -142,7 +142,7 @@
                     thumbnailDiv   = popupDiv;
                     thumbSrc    = popupDiv.data('popup');
                 }
-                
+
                 if( imagesWithDimensions == false && container.data('settings').waitForAllThumbsNoMatterWhat == false ){
                     if( thumbnailDiv.data('width') == undefined && thumbnailDiv.data('height') == undefined ){
                         /* Then we are good to go since we don't want images with dimenssions specified */
@@ -153,7 +153,7 @@
                 }
 
                 boxImage.attr('data-imageconverted', 'yes');
-                
+
                 var thumbTitle = thumbnailDiv.attr('title');
                 if(thumbTitle == undefined){
                     thumbTitle = thumbSrc;
@@ -180,15 +180,15 @@
                     function fadeInOrBroken(image){
                         var $image          = $(image.img);
                         var thumbnailDiv    = $image.parents('.image-with-dimensions');
-                        
+
                         if(thumbnailDiv[0] == undefined){ /* If is undefined it means that it has already been loaded or broken so skip it */
                             return;
                         }
 
                         if( image.isLoaded ){
                             $image.fadeIn(400, function(){ /* This will only be trigger if you hide the image above (if the "waitUntilThumbLoads" settings is true) */
-                                thumbnailDiv.removeClass('image-with-dimensions'); 
-                            }); 
+                                thumbnailDiv.removeClass('image-with-dimensions');
+                            });
                         }else{
                             thumbnailDiv.removeClass('image-with-dimensions');
                             $image.hide(); /* hide image since you are going to show a broken logo */
@@ -199,7 +199,7 @@
                     /* FadeIn thumbnails that have dimensions specified if you want to show them after they have been loaded */
                     container.find('.image-with-dimensions').imagesLoadedMB()
                         .always(function(instance){
-                            
+
                             /* In case the progress event don't get to show the images (this happens sometimes when you refresh the page) */
                             for(index in instance.images){
                                 var image = instance.images[index];
@@ -208,7 +208,7 @@
 
                         })
                         .progress(function(instance, image) {
-                            
+
                             fadeInOrBroken(image);
 
                         });
@@ -245,7 +245,7 @@
 
         /* ****** Calculate the right dimensions for the thumbnails ****** */
         function setStaticDimensionsOfThumbnails(container){
-            
+
             container.find(itemSelector).find(boxImageSelector).each(function(){
                 var boxImage        = $(this);
                 var thumbnailDiv    = boxImage.find('div[data-thumbnail]').eq(0); /* only one thumb allowed */
@@ -254,23 +254,23 @@
                 if(thumbnailDiv[0] == undefined){ /* if you haven't sepcified a thumbnail then take the image */
                     thumbnailDiv = popupDiv;
                 }
-                
+
                 var imgWidth    = parseFloat( thumbnailDiv.data('width') );
                 var imgHeight   = parseFloat( thumbnailDiv.data('height') );
 
                 var newWidth    = boxImage.parents(itemSelector).width() - container.data('settings').horizontalSpaceBetweenBoxes;
                 var newHeight   = (imgHeight * newWidth)/imgWidth;
-                
+
                 thumbnailDiv.css('width', newWidth);
 
-                /* Set the height only to those thumbs with width and height specified */ 
+                /* Set the height only to those thumbs with width and height specified */
                 if( thumbnailDiv.data('width') != undefined || thumbnailDiv.data('height') != undefined ){
                     thumbnailDiv.css('height', Math.floor(newHeight));
                 }
             });
 
         }
-        
+
         /* ****** Set the width of the columns according to the settings specified ****** */
         function setColumnWidth(container, columnWidth, columns){
             var mediaBoxes = container.find(itemSelector);
@@ -289,11 +289,11 @@
 
             /* the width that the isotope logic will use for each column of the grid */
             container.find('.media-boxes-grid-sizer').css( 'width' , newWidth );
-            
+
             mediaBoxes.each(function(index){
                 var $this       = $(this);
                 var boxColumns  = $this.data('columns');
-                
+
                 /* check for the number of columns on each box */
                 if(boxColumns != undefined && parseInt(columns)>=parseInt(boxColumns)){
                     if(percentage){
@@ -310,7 +310,7 @@
                 }
             });
         }
-        
+
         /* ****** Get viewport dimensions ****** */
         function viewport() {
             var e = window, a = 'inner';
@@ -320,20 +320,20 @@
             }
             return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
         }
-        
+
         /* ****** Get and set the correct columnWidth for the current resolution ****** */
         function getAndSetColumnWidth(container){
             var resolutionFound = false;
             for (var key in container.data('settings').resolutions) {
                 var value = container.data('settings').resolutions[key];
-                
+
                 if( value.maxWidth >= viewport().width ){
                     setColumnWidth(container, value.columnWidth, value.columns);
                     resolutionFound = true;
                     break;
                 }
             }
-            
+
             /* If there wasn't a match then use the default one */
             if( resolutionFound == false ){
                 setColumnWidth(container, container.data('settings').columnWidth, container.data('settings').columns);
@@ -349,7 +349,7 @@
                                 });
 
             var boxes = container.find(itemSelector+':not([data-wrapper-added])').attr('data-wrapper-added', 'yes');
-            
+
             boxes.wrapInner( wrapper );
         }
 
@@ -373,42 +373,42 @@
 
                     /* Add wrapper for some effects */
                     if( effect == 'push-up' || effect == 'push-down' || effect == 'push-up-100%' || effect == 'push-down-100%'  ){
-                        
+
                             var thumbnailDiv        = boxImage.find('.media-box-thumbnail-container');
                             var thumbnailOverlay    = boxImage.find('.thumbnail-overlay').css('position', 'relative');
                             if( effect == 'push-up-100%' || effect == 'push-down-100%' ){/* set the height of the overlay to the same of the thumbnail */
                                 thumbnailOverlay.outerHeight( thumbnailDiv.outerHeight(false) );
                             }
                             var heightOverlay       = thumbnailOverlay.outerHeight(false);
-                            
+
 
 
                             var wrapper             = $('<div class="wrapper-for-some-effects"></div');
 
                             if( effect == 'push-up' || effect == 'push-up-100%' ){
-                                thumbnailOverlay.appendTo(boxImage);    
+                                thumbnailOverlay.appendTo(boxImage);
                             }else if( effect == 'push-down' || effect == 'push-down-100%'  ){
-                                thumbnailOverlay.prependTo(boxImage);    
+                                thumbnailOverlay.prependTo(boxImage);
                                 wrapper.css('margin-top', -heightOverlay);
                             }
-                    
+
                             boxImage.wrapInner( wrapper );
 
                     }
                     /* Set some CSS style for this effects */
                     else if( effect == 'reveal-top' || effect == 'reveal-top-100%' ){
-                        
+
                         box.addClass('position-reveal-effect');
-                        
+
                         var overlay = box.find('.thumbnail-overlay').css('top', 0);
                         if( effect == 'reveal-top-100%' ){
                             overlay.css('height', '100%');
                         }
 
                     }else if( effect == 'reveal-bottom' || effect == 'reveal-bottom-100%' ){
-                        
+
                         box.addClass('position-reveal-effect').addClass('position-bottom-reveal-effect');
-                        
+
                         var overlay = box.find('.thumbnail-overlay').css('bottom', 0);
                         if( effect == 'reveal-bottom-100%' ){
                             overlay.css('height', '100%');
@@ -420,7 +420,7 @@
                         box.find('.thumbnail-overlay').css('height', '100%');
 
                     }else if( effect == 'fade' ){
-                        
+
                         var thumbOverlay = box.find('.thumbnail-overlay').hide();
                         thumbOverlay.css({
                                             'height' : '100%',
@@ -469,7 +469,7 @@
                 setDimensionsToImageContainer(container);
                 hideOverlaysOnResize(container);
                 /* End hack */
-                
+
                 // don't trigger if size did not change
                 // or if resize was unbound. See #9
                 if ( !this.isResizeBound || !this.needsResizeLayout() ) {
@@ -479,7 +479,7 @@
                 this.layout();
             }
         });
-        
+
         /* ****** Extending Isotope so when it does set the container width the plugin can refresh the lazy load feature ****** */
         $.extend( IsotopeMB.prototype, {
             _setContainerMeasure : function( measure, isWidth ) {
@@ -498,7 +498,7 @@
 
                   measure = Math.max( measure, 0 );
                   this.element.style[ isWidth ? 'width' : 'height' ] = measure + 'px';
-                  
+
                   /* Hack to refresh the waypoint */
                   var container = $(this.element);
                   $.waypoints('refresh');
@@ -517,7 +517,7 @@
                 var items = this.addItems( elems );
                 if ( !items.length ) {
                   return;
-                }   
+                }
 
                 /* Snippet (the insertBefore method so it is always ordered) */
                 var container   = $(this.element);
@@ -532,7 +532,7 @@
                   }else{
                     this.element.appendChild( item.element );
                   }
-                } 
+                }
                 /* End Snippet */
 
                 var isotopeDefaultLogic = function(){
@@ -581,22 +581,22 @@
 
 
                 var instance    = this;
-                
+
                 /* Set the vertical and horizontal space between boxes */
                 addWrapperForMargins(container);
-                
+
                 /* Set the columnWidth and set the static dimensions of the images that have it specified */
                 getAndSetColumnWidth(container);
                 setStaticDimensionsOfThumbnails(container);
 
                 addPopupTrigger(container);
-                
+
                 convertDivsIntoImages(container, false); /* only the ones that have NO width and height */
 
                 container.find('img:not([data-dont-wait-for-me])').imagesLoadedMB()
                     .always(function(){
                         if( settings.waitForAllThumbsNoMatterWhat == false ){
-                            convertDivsIntoImages(container, true); /* the ones left that have width and height */                  
+                            convertDivsIntoImages(container, true); /* the ones left that have width and height */
                         }
 
                         /* Add the class to show the box */
@@ -624,9 +624,9 @@
                         /* For broken images */
                         checkForBrokenImages(image);
                     });
-                
+
                 /* ======== End Hack ======== */
-            }                  
+            }
         });
 
     /* ====================================================================== *
@@ -634,8 +634,8 @@
      * ====================================================================== */
 
         function updateFilterClasses(){
-            var boxes         = $container.find(itemSelector+', .'+itemHiddenClass);   
-            
+            var boxes         = $container.find(itemSelector+', .'+itemHiddenClass);
+
             var filter = getCurrentFilter();
             boxes.filter( filter ).removeClass('hidden-media-boxes-by-filter').addClass('visible-media-boxes-by-filter');
             boxes.not( filter ).addClass('hidden-media-boxes-by-filter').removeClass('visible-media-boxes-by-filter');
@@ -648,7 +648,7 @@
             // Combined the filters and filter isotope
             goAndFilterIsotope(filterValue, filterGroup);
 
-            // update some CSS classes 
+            // update some CSS classes
             updateFilterClasses();
 
             // Fix some details, like the loading button, the minBoxesPerFilter
@@ -671,7 +671,7 @@
         function goAndFilterIsotope(filterValue, filterGroup){
             // set filter for group
             filters[ filterGroup ] = filterValue;
-            
+
             // set filters for Isotope
             $container.isotopeMB({ filter: combineFilters(filters) });
         }
@@ -684,8 +684,8 @@
                     filters[ prop ] = '*';
                 }
             }
-            
-            var longerFilter = ''; // i.e. navigation-bar 
+
+            var longerFilter = ''; // i.e. navigation-bar
             for ( var prop in filters ) {
                 var filter = filters[ prop ];
 
@@ -711,13 +711,13 @@
                         }else{
                             if(filterSplit[i] == '*'){
                                 filterSplit[i] = '';
-                            }   
+                            }
                             if(largerFilterSplit[j] == '*'){
                                 largerFilterSplit[j] = '';
                             }
                         }
-                        
-                        
+
+
                         newFilter.push( largerFilterSplit[j]+filterSplit[i] );
                     }
                     combinedFilters = newFilter.join(',');
@@ -747,7 +747,7 @@
         }
 
         function getBoxesInCurrentFilter(){
-            var boxes = $container.find(itemSelector);   
+            var boxes = $container.find(itemSelector);
             var filter = getCurrentFilter();
             if( filter != '*' ){
                 boxes = boxes.filter( filter );
@@ -757,7 +757,7 @@
         }
 
         function getLoadingBoxesInCurrentFilter(){
-            var boxes = getBoxesInCurrentFilter().not('.media-box-loaded');   
+            var boxes = getBoxesInCurrentFilter().not('.media-box-loaded');
 
             return boxes;
         }
@@ -772,7 +772,7 @@
         }
 
         function hiddenBoxesWaitingToLoad(ignoreFilter){ /* Number of hidden boxes waiting to get load, depending on the filter */
-            var boxes = $container.find('.'+itemHiddenClass);   
+            var boxes = $container.find('.'+itemHiddenClass);
 
             var filter = getCurrentFilter();
             if( filter != '*' && ignoreFilter == undefined){
@@ -808,9 +808,9 @@
 
             if( hiddenBoxesWaitingToLoad().length > 0 ){
                 loadMoreButton.html(settings.loadMoreWord);
-                loadMoreButton.addClass('media-boxes-load-more'); 
+                loadMoreButton.addClass('media-boxes-load-more');
             }else{
-                loadMoreButton.html(settings.noMoreEntriesWord); 
+                loadMoreButton.html(settings.noMoreEntriesWord);
                 loadMoreButton.addClass('media-boxes-no-more-entries');
             }
         }
@@ -829,29 +829,29 @@
             /* Boxes that will be loaded as part of isotope */
             hiddenBoxesWaitingToLoad(ignoreFilter).each(function(index){
                 var $this = $(this);
-                if( (index+1) <=  boxesToLoad){ 
+                if( (index+1) <=  boxesToLoad){
                     $this.removeClass(itemHiddenClass).addClass(itemClass);
                     $this.hide();
                     newBoxes.push(this);
                 }
-            }); 
-            
+            });
+
             $container.isotopeMB( 'insert', $(newBoxes), function(){
-                /* Fix Load More Button */   
+                /* Fix Load More Button */
                 finishLoading();
 
                 /* Force a relayout of Isotope */
                 $container.isotopeMB('layout');
 
-                // == START CUSTOMIZATION         REMEMBER: deepLinking:false , id of target1, target2 , hiddenStyle:{opacity:0,transform:"scale(0.001)"} 
+                // == START CUSTOMIZATION         REMEMBER: deepLinking:false , id of target1, target2 , hiddenStyle:{opacity:0,transform:"scale(0.001)"}
                 /*if(firstTime == true && location.hash.substr(0, 2) == '#-'){
                     var hash        = location.href.split('#-')[1];
                     var scrollTo    = $container.find('#'+hash);
 
                     if(scrollTo[0] != undefined){
-                        setTimeout(function(){ 
-                           $("body, html").animate({ 
-                                scrollTop: scrollTo.offset().top 
+                        setTimeout(function(){
+                           $("body, html").animate({
+                                scrollTop: scrollTo.offset().top
                             }, 600);
                         }, 500);
                     }
@@ -860,12 +860,12 @@
             });
         }
         loadMore( settings.boxesToLoadStart, true);
-        
+
         /* Load more boxes when you click the button */
         loadMoreButton.on('click', function(){
             loadMore( settings.boxesToLoad );
         });
-        
+
 
         if( settings.lazyLoad ){
 
@@ -883,24 +883,24 @@
                 enabled: true,
                 horizontal: false,
                 offset: 'bottom-in-view',
-                triggerOnce: false,   
+                triggerOnce: false,
              });
 
         }
 
     /* ====================================================================== *
             [6] FILTER
-     * ====================================================================== */   
+     * ====================================================================== */
 
-        var filterContainer = $(settings.filterContainer);  
+        var filterContainer = $(settings.filterContainer);
 
         filterContainer.find(settings.filter).on('click', function(e){
             var $this = $(this);
-            
+
             /* Remove selected class from others */
             var filterContainer = $this.parents(settings.filterContainer);
             filterContainer.find(settings.filter).removeClass('selected');
-            
+
             /* Add class of selected */
             $this.addClass('selected');
 
@@ -942,7 +942,7 @@
 
     /* ====================================================================== *
             [7] SEARCH
-     * ====================================================================== */     
+     * ====================================================================== */
 
         function search(value){
             if(value == undefined) return;
@@ -976,7 +976,7 @@
 
     /* ====================================================================== *
             [8] SORTING
-     * ====================================================================== */     
+     * ====================================================================== */
 
         function getSortDirection($this){
             var direction = $this.data('sort-ascending');
@@ -996,7 +996,7 @@
 
             /* Remove selected class from others */
             $this.parents(settings.sortContainer).find(settings.sort).removeClass('selected');
-            
+
             /* Add class of selected */
             $this.addClass('selected');
 
@@ -1007,10 +1007,10 @@
             e.preventDefault();
         });
 
-    
+
     /* ====================================================================== *
             [9] THUMBNAIL OVERLAY EFFECT
-     * ====================================================================== */    
+     * ====================================================================== */
 
         function hideWhenDone(element){
             if( element.attr('data-stop') != undefined ){
@@ -1027,20 +1027,20 @@
             if(boxImage.data('overlay-effect') != undefined){
                 effect = boxImage.data('overlay-effect');
             }
-            
+
             var eventType           = event.type;
             var thumbnailDiv        = boxImage.find('.media-box-thumbnail-container');
             var thumbnailOverlay    = boxImage.find('.thumbnail-overlay') ;
             var heightOverlay       = thumbnailOverlay.outerHeight(false);
-            
+
             /* The effects */
             if( effect == 'push-up' || effect == 'push-up-100%' ){
                 var wrapper = boxImage.find('div.wrapper-for-some-effects');
 
                 if( eventType === 'mouseenter' ) {
-                    wrapper.stop().show()[animation]({ 'margin-top': -heightOverlay }, settings.overlaySpeed, settings.overlayEasing); 
+                    wrapper.stop().show()[animation]({ 'margin-top': -heightOverlay }, settings.overlaySpeed, settings.overlayEasing);
                 }else{
-                    wrapper.stop()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing); 
+                    wrapper.stop()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing);
                 }
             }
 
@@ -1048,31 +1048,31 @@
                 var wrapper = boxImage.find('div.wrapper-for-some-effects');
 
                 if( eventType === 'mouseenter' ) {
-                    wrapper.stop().show()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing); 
+                    wrapper.stop().show()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing);
                 }else{
-                    wrapper.stop()[animation]({ 'margin-top': -heightOverlay }, settings.overlaySpeed, settings.overlayEasing); 
+                    wrapper.stop()[animation]({ 'margin-top': -heightOverlay }, settings.overlaySpeed, settings.overlayEasing);
                 }
             }
 
             else if( effect == 'reveal-top' || effect == 'reveal-top-100%' ){
                 if( eventType === 'mouseenter' ) {
-                    thumbnailDiv.stop().show()[animation]({ 'margin-top': heightOverlay }, settings.overlaySpeed, settings.overlayEasing); 
+                    thumbnailDiv.stop().show()[animation]({ 'margin-top': heightOverlay }, settings.overlaySpeed, settings.overlayEasing);
                 }else{
-                    thumbnailDiv.stop()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing); 
-                }   
+                    thumbnailDiv.stop()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing);
+                }
             }
 
             else if( effect == 'reveal-bottom' || effect == 'reveal-bottom-100%' ){
                 if( eventType === 'mouseenter' ) {
-                    thumbnailDiv.stop().show()[animation]({ 'margin-top': -heightOverlay }, settings.overlaySpeed, settings.overlayEasing); 
+                    thumbnailDiv.stop().show()[animation]({ 'margin-top': -heightOverlay }, settings.overlaySpeed, settings.overlayEasing);
                 }else{
-                    thumbnailDiv.stop()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing); 
-                }   
+                    thumbnailDiv.stop()[animation]({ 'margin-top': 0 }, settings.overlaySpeed, settings.overlayEasing);
+                }
             }
 
             else if( effect.substr(0, 9) == 'direction' ){ // 'direction-aware', 'direction-aware-fade', 'direction-right', 'direction-left', 'direction-top', 'direction-bottom'
                 var direction   = _getDir( boxImage, { x : event.pageX, y : event.pageY } );
-                
+
                 if( effect == 'direction-top' ){
                     direction   = 0;
                 }else if( effect == 'direction-bottom' ){
@@ -1089,13 +1089,13 @@
                     thumbnailOverlay.css( { 'left' : cssPos.from, 'top' : cssPos.to } );
 
                     thumbnailOverlay.stop().show().fadeTo(0, 1, function(){
-                                                                    $(this).stop()[animation]({ 'left' : 0, 'top' : 0 }, settings.overlaySpeed, settings.overlayEasing); 
+                                                                    $(this).stop()[animation]({ 'left' : 0, 'top' : 0 }, settings.overlaySpeed, settings.overlayEasing);
                                                                 });
                 }else{
                     if( effect == 'direction-aware-fade' ){
                         thumbnailOverlay.fadeOut(700);
                     }else{
-                        thumbnailOverlay.stop()[animation]({ 'left' : cssPos.from, 'top' : cssPos.to }, settings.overlaySpeed, settings.overlayEasing ); 
+                        thumbnailOverlay.stop()[animation]({ 'left' : cssPos.from, 'top' : cssPos.to }, settings.overlaySpeed, settings.overlayEasing );
                     }
                 }
             }
@@ -1113,16 +1113,16 @@
                 /* Effect of the icons */
                 var icons = thumbnailOverlay.find('.fa');
                 if( eventType == 'mouseenter' ){
-                    icons.css({ scale: 1.4 }); 
-                    icons[animation]({ scale: 1 }, 200); 
+                    icons.css({ scale: 1.4 });
+                    icons[animation]({ scale: 1 }, 200);
                 }else{
-                    icons.css({ scale: 1 }); 
-                    icons[animation]({ scale: 1.4 }, 200); 
+                    icons.css({ scale: 1 });
+                    icons[animation]({ scale: 1.4 }, 200);
                 }
             }
 
 
-        });   
+        });
 
 
         /* ****** Methods for the direction-aware hover effect ****** */
@@ -1136,16 +1136,16 @@
                 /** gets the x value relative to the center of the DIV and "normalize" it **/
                 x = ( coordinates.x - $el.offset().left - ( w/2 )) * ( w > h ? ( h/w ) : 1 ),
                 y = ( coordinates.y - $el.offset().top  - ( h/2 )) * ( h > w ? ( w/h ) : 1 ),
-            
+
                 /** the angle and the direction from where the mouse came in/went out clockwise (TRBL=0123);**/
-                /** first calculate the angle of the point, 
+                /** first calculate the angle of the point,
                 add 180 deg to get rid of the negative values
                 divide by 90 to get the quadrant
                 add 3 and do a modulo by 4  to shift the quadrants to a proper clockwise TRBL (top/right/bottom/left) **/
                 direction = Math.round( ( ( ( Math.atan2(y, x) * (180 / Math.PI) ) + 180 ) / 90 ) + 3 )  % 4;
-            
+
             return direction;
-            
+
         };
 
         var _getPosition = function( direction, $el ) {
@@ -1153,27 +1153,27 @@
             switch( direction ) {
                 case 0:
                     // from top
-                    if ( !settings.reverse ) { 
-                            fromLeft = 0, fromTop = - $el.height() 
-                    }else {  
-                            fromLeft = 0, fromTop = - $el.height()  
+                    if ( !settings.reverse ) {
+                            fromLeft = 0, fromTop = - $el.height()
+                    }else {
+                            fromLeft = 0, fromTop = - $el.height()
                     }
                     break;
                 case 1:
                     // from right
-                    if ( !settings.reverse ) { 
+                    if ( !settings.reverse ) {
                             fromLeft = $el.width()  , fromTop = 0
-                    }else {  
-                            fromLeft = - $el.width() , fromTop = 0 
+                    }else {
+                            fromLeft = - $el.width() , fromTop = 0
                     }
                     break;
                 case 2:
                     // from bottom
-                    if ( !settings.reverse ) { 
-                            fromLeft = 0 , fromTop = $el.height() 
+                    if ( !settings.reverse ) {
+                            fromLeft = 0 , fromTop = $el.height()
                     }
-                    else {  
-                            fromLeft = 0, fromTop = - $el.height()  
+                    else {
+                            fromLeft = 0, fromTop = - $el.height()
                     }
                     break;
                 case 3:
@@ -1181,13 +1181,13 @@
                     if ( !settings.reverse ) {
                             fromLeft = -$el.width()  , fromTop = 0
                     }
-                    else {  
-                            fromLeft =  $el.width(), fromTop = 0 
+                    else {
+                            fromLeft =  $el.width(), fromTop = 0
                     }
                     break;
             };
             return { from : fromLeft, to: fromTop };
-        }; 
+        };
 
 
     /* ====================================================================== *
@@ -1195,7 +1195,7 @@
      * ====================================================================== */
 
         var delegate = '.mb-open-popup[data-mfp-src]';
-        
+
         if(settings.considerFilteringInPopup){
             delegate = itemSelector+':not(.hidden-media-boxes-by-filter) .mb-open-popup[data-mfp-src], .'+itemHiddenClass+':not(.hidden-media-boxes-by-filter) .mb-open-popup[data-mfp-src]';
         }
@@ -1226,9 +1226,9 @@
                           id: 'v=', // String that splits URL in a two parts, second part should be %id%
                           // Or null - full URL will be returned
                           // Or a function that should return %id%, for example:
-                          // id: function(url) { return 'parsed id'; } 
+                          // id: function(url) { return 'parsed id'; }
 
-                          src: 'https://www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe. 
+                          src: 'https://www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
                         },
                         vimeo: {
                           index: 'vimeo.com/',
@@ -1240,14 +1240,14 @@
                                     '<div class="mfp-close"></div>'+
                                     '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
                                     '<div class="mfp-bottom-bar" style="margin-top:4px;"><div class="mfp-title"></div><div class="mfp-counter"></div></div>'+
-                             '</div>'                      
+                             '</div>'
                 },
                 callbacks : {
                     change : function() {
                         var item    = $(this.currItem.el);
-                        setTimeout(function(){ 
+                        setTimeout(function(){
                             if(item.attr('mfp-title') != undefined){
-                                $('.mfp-title').html(item.attr('mfp-title'));    
+                                $('.mfp-title').html(item.attr('mfp-title'));
                             }else{
                                 $('.mfp-title').html('');
                             }
@@ -1310,7 +1310,7 @@
      * ====================================================================== */
 
         if(settings.deepLinking){
-        
+
                 function urlFromHash() {
                     if (location.hash.substr(0, 2) != '#!') {
                         return null;
@@ -1338,7 +1338,7 @@
                         // this event e.g. until something else finished loading - in that case hashchange might trigger before
                         return;
                     }
-                    
+
                     var url = urlFromHash();
                     if (!url && mp.isOpen) {
                         // no url => close popup
@@ -1371,7 +1371,7 @@
                 if (window.addEventListener) {
                     window.addEventListener("hashchange", doHash, false);
                 } else if (window.attachEvent) {
-                    window.attachEvent("onhashchange", doHash);  
+                    window.attachEvent("onhashchange", doHash);
                 }
 
         }
@@ -1424,7 +1424,7 @@
         return this;
 
     };//END OF FUSION OBJECT
-    
+
 
      $.fn.mediaBoxes = function(options) {
 
@@ -1439,7 +1439,7 @@
         });
 
     };
-    
+
     //Default settings
     $.fn.mediaBoxes.defaults = {
         boxesToLoadStart: 8,
@@ -1476,7 +1476,7 @@
         getSortData: {
           title: '.media-box-title',
           text: '.media-box-text',
-        }, 
+        },
         waitUntilThumbLoads: true, // When they have dimensions specified
         waitForAllThumbsNoMatterWhat: false, // Wait for all the thumbnails to load even if they got dimensions specified
         thumbnailOverlay: true, //Show the overlay on mouse over
@@ -1509,7 +1509,7 @@
     (function(){
 
 
-        /* CHECK FOR MOBILE BROWSER */ 
+        /* CHECK FOR MOBILE BROWSER */
         function isMobileBrowser() {
             var check = false;
             (function(a){
@@ -1517,15 +1517,15 @@
                     check = true
                 }
             )(navigator.userAgent||navigator.vendor||window.opera);
-            return check; 
+            return check;
         }
 
         function start($wrapper){
             var $menu           = $wrapper.find('.media-boxes-drop-down-menu');
             var $header         = $wrapper.find('.media-boxes-drop-down-header');
-            
+
             function mouseout(){
-                $menu.hide(); 
+                $menu.hide();
             };
 
             function mouseover(){
@@ -1536,7 +1536,7 @@
                 var $selectedDefault    = $menu.find( '.selected' );
                 var $selected           = $selectedDefault.length ? $selectedDefault.parents('li') : $menu.children().first();
 
-                
+
                 $header.html( $selected.clone().find('a').append('<span class="fa fa-sort-desc"></span>').end().html() );
             }
             updateHeader();
@@ -1544,7 +1544,7 @@
             function click(e){
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 $(this).parents('li').siblings('li').find('a').removeClass('selected').end().end().find('a').addClass('selected');
                 updateHeader();
 
@@ -1600,5 +1600,5 @@
     })();
 
 
-    
+
 })( window, jQuery );
