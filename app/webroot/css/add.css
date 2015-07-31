@@ -43,7 +43,7 @@ input[type="text"], input[type="email"], textarea, select {
     margin-top: 2px;
     outline: 0 none;
     padding: 3px 3px 3px 5px;
-    width: 100%;
+    width: 85%;
     font-size: 14px;
     line-height:15px;
     box-shadow: inset 0px 1px 4px #ECECEC;
@@ -103,4 +103,8 @@ fieldset {
 	padding: 0.35em 0.625em 0.75em !important;
 	margin: 0 2px !important;
 	border: 1px solid #c0c0c0 !important;
+}
+
+.form-control {
+	left: 0px !important;
 }

@@ -34,8 +34,8 @@ echo $this->Html->css(array('magnific-popup', 'mediaBoxes'));
     <div class="media-boxes-drop-down-header">
     </div>
     <ul class="media-boxes-drop-down-menu">
-        <li><a href="#" data-sort-by="original-order">Original Order</a></li>
         <li><a class="selected" href="#" data-sort-by="title">Sort by Title</a></li>
+		<li><a href="#" data-sort-by="date">Sort by Date</a></li>
         <li><a href="#" data-sort-by="text">Sort by Text</a></li>
     </ul>
 </div>
@@ -69,12 +69,12 @@ echo $this->Html->css(array('magnific-popup', 'mediaBoxes'));
 	</div>
 	<div class="media-box-content">
         <div class="media-box-title"><?= $word['Word']['category'] ?></div>
-        <div class="media-box-date">December 10, 2013</div>
+        <div class="media-box-date"><?php echo date('d.m.Y', strtotime($word['Word']['date_create'])); ?></div>
         <div class="media-box-text">
 		<h3><?= $word['Word']['pl_words'] ?></h3>
             Lorem ipsum dolor sit amet psico dell consecteture adipisicing elit. Adipisci, fugit, eveniet, ut exercitationem.
         </div>
-        <div class="media-box-more"> <a href="#">Read More</a> </div>
+        <div class="media-box-more"> <a href="#">Go !</a> </div>
     </div>
     </div>
 		<? endforeach; ?>
@@ -112,15 +112,20 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
 <script>
 
     $('#grid').mediaBoxes({
-        boxesToLoadStart: 5,
+        boxesToLoadStart: 25,
         boxesToLoad: 4,
-        minBoxesPerFilter: 5,
+        minBoxesPerFilter: 25,
         lazyLoad: true,
         horizontalSpaceBetweenBoxes: 15,
         verticalSpaceBetweenBoxes: 15,
         columnWidth: 'auto',
         columns: 7,
         resolutions: [
+			{
+				maxWidth: 1920,
+				columnWidth: 'auto',
+				columns: 7,
+			},
             {
                 maxWidth: 960,
                 columnWidth: 'auto',
@@ -140,12 +145,13 @@ echo $this->Html->script(array('jquery-1.10.2.min', 'jquery.isotope.min', 'jquer
         filterContainer: '#filter',
         filter: 'a',
         search: '#search',
-        searchTarget: '.media-box-title',
+        searchTarget: '.media-box-text',
         sortContainer: '#sort',
         sort: 'a',
         getSortData: {
           title: '.media-box-title',
           text: '.media-box-text',
+		  date: '.media-box-date'
         },
         waitUntilThumbLoads: true,
         waitForAllThumbsNoMatterWhat: false,

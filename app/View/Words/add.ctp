@@ -1,6 +1,7 @@
 <?php
 echo $this->Html->charset();
 echo $this->Html->css('bootstrap');
+echo $this->Html->script('comboselectbox');
 ?>
 <form class="form-horizontal" id="AdminAddForm" method="post" action="">
 <h1>Add new WORDs
@@ -53,26 +54,23 @@ echo $this->Html->css('bootstrap');
 	<br>
 
 	<fieldset>
+		<span id="bcs_comboBox">
 		<legend>Choose category</legend>
 	<div class="form-group form-group-lg">
 		<div class="row">
         <div class="col-sm-4"><h4>Category:</h4></div>
 		<div class="col-sm-4">
-		<select class="form-control" name="data[Word][category]">
-			<? $categories = Hash::extract($words, '{n}.Word.category');
+			<input type="text" name="data[Word][category]" id="comboInput" class="comboInput" />
+			<select class="form-control" name="data[Word][category]" id="comboSel" tabindex="-1">
+				<? $categories = Hash::extract($words, '{n}.Word.category');
 			$uniqueCategories = array_unique($categories);
 			foreach ($uniqueCategories as $category) {
-				echo '<option>' . $category . '</option>';
-			}?>
-        </select>
+				echo '<option value="' . $category . '">' . $category . '</option>';
+				}?>
+			</select>
 		</div></div>
-		<div class="row">
-		<div class="col-sm-4"><h4>Add Category:</h4></div>
-		<div class="col-sm-4">
-			<input class="form-control" name="data[Word][category]" type="text" placeholder="Enter new category"/>
-		</div></div>
-
 	</div>
+			</span>
 		</fieldset>
 	<script>
 		(function(){

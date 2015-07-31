@@ -101,6 +101,15 @@ public function edit($id = null) {
     if (!$this->request->data) {
         $this->request->data = $word;
     }
+
+    $this->Paginator->settings = array(
+                    'conditions' => array('Word.role' => CakeSession::read("Auth.User.username")),
+                    'limit' => 100
+                );
+             // similar to findAll(), but fetches paged results
+                $data = $this->Paginator->paginate('Word');
+                $this->set('words', $data);
+                    //$this->set('words', $this->paginate('Word'));
 }
 
 public function display()
